@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading Screen</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+  /* =====================================================
+     KONFIGURASI LOGO — EDIT DI SINI
+     ===================================================== */
+  :root {
+    --logo-type: "text";          /* "text" atau "image" */
+    --logo-text: "APEX";          /* teks logo jika type = text */
+    --logo-image-url: "";         /* URL gambar jika type = image */
+    --logo-size: 80px;            /* ukuran logo */
+
+    --primary: #0affe0;
+    --secondary: #ff3cac;
+    --bg: #05060f;
+    --surface: rgba(255,255,255,0.03);
+    --border: rgba(10, 255, 224, 0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Space Mono', monospace;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* ── Grid noise background ── */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,255,224,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,255,224,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    animation: gridShift 20s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes gridShift {
+    from { transform: translateY(0); }
+    to   { transform: translateY(48px); }
+  }
+
+  /* ── Ambient orbs ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.18;
+    pointer-events: none;
+    animation: orbPulse 6s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 500px; height: 500px; background: var(--primary);  top: -150px; left: -150px; animation-delay: 0s; }
+  .orb-2 { width: 400px; height: 400px; background: var(--secondary); bottom: -100px; right: -100px; animation-delay: -3s; }
+
+  @keyframes orbPulse {
+    from { transform: scale(1); opacity: 0.15; }
+    to   { transform: scale(1.15); opacity: 0.25; }
+  }
+
+  /* ── Loading card ── */
+  .card {
+    position: relative;
+    width: 360px;
+    padding: 48px 40px 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    backdrop-filter: blur(24px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    animation: cardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ── Corner accents ── */
+  .card::before,
+  .card::after {
+    content: "";
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--primary);
+    border-style: solid;
+  }
+  .card::before { top: 12px; left: 12px; border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
+  .card::after  { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; border-radius: 0 0 4px 0; }
+
+  /* ── Logo wrapper ── */
+  .logo-wrap {
+    position: relative;
+    width: var(--logo-size);
+    height: var(--logo-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Spinning ring */
+  .ring {
+    position: absolute; inset: -12px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: var(--primary);
+    border-right-color: var(--primary);
+    animation: spin 1.6s linear infinite;
+  }
+  .ring-2 {
+    position: absolute; inset: -20px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    border-bottom-color: var(--secondary);
+    animation: spin 3s linear infinite reverse;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Glow behind logo */
+  .logo-glow {
+    position: absolute; inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(10,255,224,0.12) 0%, transparent 70%);
+    animation: glowPulse 2s ease-in-out infinite alternate;
+  }
+  @keyframes glowPulse {
+    from { opacity: 0.5; }
+    to   { opacity: 1; }
+  }
+
+  /* Text logo */
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: calc(var(--logo-size) * 0.4);
+    color: var(--primary);
+    letter-spacing: -1px;
+    text-shadow: 0 0 24px rgba(10,255,224,0.6);
+    user-select: none;
+    line-height: 1;
+  }
+
+  /* Image logo */
+  .logo-img {
+    width: var(--logo-size);
+    height: var(--logo-size);
+    object-fit: contain;
+    border-radius: 12px;
+    filter: drop-shadow(0 0 16px rgba(10,255,224,0.5));
+  }
+
+  /* ── Status label ── */
+  .status {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary);
+    opacity: 0.7;
+    animation: blink 1.8s ease-in-out infinite;
+    text-align: center;
+  }
+  @keyframes blink {
+    0%,100% { opacity: 0.4; }
+    50%      { opacity: 1; }
+  }
+
+  /* ── Progress bar ── */
+  .progress-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+  }
+
+  .bar-track {
+    width: 100%;
+    height: 3px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 999px;
+    box-shadow: 0 0 12px rgba(10,255,224,0.6);
+    transition: width 0.3s ease;
+  }
+
+  /* ── Step indicators ── */
+  .steps {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    transition: color 0.4s;
+  }
+  .step.active  { color: rgba(255,255,255,0.85); }
+  .step.done    { color: rgba(10,255,224,0.7); }
+
+  .step-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    flex-shrink: 0;
+    transition: background 0.4s;
+  }
+  .step.active .step-dot { background: var(--primary); box-shadow: 0 0 8px var(--primary); }
+  .step.done   .step-dot { background: rgba(10,255,224,0.5); }
+
+  /* ── Percent display ── */
+  .percent {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    color: #fff;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .percent span { font-size: 18px; color: rgba(255,255,255,0.4); }
+
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="card">
+
+  <!-- LOGO -->
+  <div class="logo-wrap" id="logoWrap">
+    <div class="logo-glow"></div>
+    <div class="ring"></div>
+    <div class="ring-2"></div>
+    <!-- Logo diisi oleh JS berdasarkan config -->
+  </div>
+
+  <!-- STATUS -->
+  <div class="status" id="statusText">Initializing system...</div>
+
+  <!-- PERCENT -->
+  <div class="percent" id="percentDisplay">0<span>%</span></div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-wrap">
+    <div class="bar-track">
+      <div class="bar-fill" id="barFill"></div>
+    </div>
+    <div class="progress-labels">
+      <span>LOADING</span>
+      <span id="etaLabel">—</span>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps" id="stepList"></div>
+
+</div>
+
+<script>
+  /* =====================================================
+     ⚙️  KONFIGURASI — UBAH SESUAI KEBUTUHAN
+     ===================================================== */
+  const CONFIG = {
+    // Logo: pilih salah satu mode
+    logo: {
+      type: "text",           // "text" | "image"
+      text: "IRHAM",           // jika type = "text"
+      imageUrl: "",           // jika type = "image" (isi URL gambar)
+      size: "80px",
+    },
+
+    // Teks status per tahap
+    steps: [
+      "Initializing system",
+      "Loading resources",
+      "Connecting to server",
+      "Verifying credentials",
+      "Anti nyabu...",
+    ],
+
+    // Durasi total loading (ms)
+    duration: 15000,
+
+    // URL tujuan setelah loading selesai
+    redirectUrl: "1.html",  // ← GANTI dengan URL website kamu
+  };
+  /* ===================================================== */
+
+
+  /* --- Build Logo --- */
+  const logoWrap = document.getElementById("logoWrap");
+  document.documentElement.style.setProperty("--logo-size", CONFIG.logo.size);
+
+  if (CONFIG.logo.type === "image" && CONFIG.logo.imageUrl) {
+    const img = document.createElement("img");
+    img.src = CONFIG.logo.imageUrl;
+    img.className = "logo-img";
+    img.alt = "logo";
+    logoWrap.appendChild(img);
+  } else {
+    const txt = document.createElement("div");
+    txt.className = "logo-text";
+    txt.textContent = CONFIG.logo.text;
+    logoWrap.appendChild(txt);
+  }
+
+  /* --- Build Steps --- */
+  const stepList = document.getElementById("stepList");
+  CONFIG.steps.forEach((label, i) => {
+    const el = document.createElement("div");
+    el.className = "step";
+    el.id = `step-${i}`;
+    el.innerHTML = `<div class="step-dot"></div><span>${label}</span>`;
+    stepList.appendChild(el);
+  });
+
+  /* --- Animate Progress --- */
+  const barFill     = document.getElementById("barFill");
+  const percentDisp = document.getElementById("percentDisplay");
+  const statusText  = document.getElementById("statusText");
+  const etaLabel    = document.getElementById("etaLabel");
+
+  let progress = 0;
+  const stepSize = 100 / CONFIG.steps.length;
+  const interval = CONFIG.duration / 100;
+  let currentStep = 0;
+
+  function getStepIndex(pct) {
+    return Math.min(Math.floor(pct / stepSize), CONFIG.steps.length - 1);
+  }
+
+  const timer = setInterval(() => {
+    // Non-linear easing — fast start, slow near 90%, sprint to 100
+    const target = progress < 80
+      ? progress + (Math.random() * 2 + 0.5)
+      : progress < 95
+      ? progress + (Math.random() * 0.5 + 0.1)
+      : progress + 1.2;
+
+    progress = Math.min(target, 100);
+
+    // Update UI
+    barFill.style.width = progress + "%";
+    percentDisp.innerHTML = `${Math.floor(progress)}<span>%</span>`;
+
+    const remaining = Math.max(0, Math.round((100 - progress) / 100 * CONFIG.duration / 1000));
+    etaLabel.textContent = remaining > 0 ? `~${remaining}s` : "Done";
+
+    // Step updates
+    const stepIdx = getStepIndex(progress);
+    if (stepIdx !== currentStep || progress >= 100) {
+      // Mark previous as done
+      for (let i = 0; i < stepIdx; i++) {
+        document.getElementById(`step-${i}`)?.classList.replace("active", "done") ||
+        document.getElementById(`step-${i}`)?.classList.add("done");
+      }
+      currentStep = stepIdx;
+    }
+
+    // Mark current step active
+    const activeEl = document.getElementById(`step-${stepIdx}`);
+    if (activeEl) {
+      activeEl.classList.remove("done");
+      activeEl.classList.add("active");
+    }
+
+    statusText.textContent = CONFIG.steps[stepIdx] + "...";
+
+    if (progress >= 100) {
+      clearInterval(timer);
+      CONFIG.steps.forEach((_, i) => {
+        const el = document.getElementById(`step-${i}`);
+        el?.classList.remove("active");
+        el?.classList.add("done");
+      });
+      statusText.textContent = "System ready ✓";
+      etaLabel.textContent = "0s";
+
+      // Redirect ke website utama
+      setTimeout(() => { window.location.href = CONFIG.redirectUrl; }, 600);
+    }
+  }, interval);
+</script>
+</body>
+</html>
