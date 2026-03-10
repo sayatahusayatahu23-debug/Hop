@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portfolio Fazri & Galeri Irhamztoy</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & VARIABEL GLOBAL (Gabungan) --- */
+        :root {
+            /* Warna Dasar (Digabung dari kedua tema) */
+            --bg-dark: #0a0a0e;
+            --bg-card: #15151e;
+            --bg-card-hover: #1e1e2a;
+            --bg-secondary: #121212; /* Dari tema ke-2 */
+            
+            --primary-purple: #7b2cbf;
+            --accent-purple: #9d4edd;
+            --neon-purple: #e0aaff;
+            --accent-color: #bb86fc; /* Warna aksen tema ke-2 */
+            
+            --text-white: #ffffff;
+            --text-gray: #a0a0b0;
+            --text-secondary: #b0b0b0;
+            
+            --btn-red: #ff4b4b;
+            --btn-red-hover: #e04444;
+            
+            --success-green: #00ff88;
+            
+            --border-radius: 16px;
+            --transition: all 0.3s ease;
+            --modal-overlay: rgba(0, 0, 0, 0.95);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            /* Gradient background global */
+            background-image: radial-gradient(circle at 50% 0%, #240046 0%, var(--bg-dark) 70%);
+        }
+
+        /* =========================================
+           STYLE BAGIAN 1: PROFILE (Fazri Lukman)
+           ========================================= */
+        .profile-section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-wrapper {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            border-radius: 24px;
+            padding: 30px 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-header { text-align: center; margin-bottom: 30px; }
+
+        .avatar-container {
+            position: relative;
+            width: 100px; height: 100px;
+            margin: 0 auto 16px;
+        }
+
+        .avatar {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-purple);
+            box-shadow: 0 0 15px rgba(123, 44, 191, 0.5);
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: 5px; right: 5px;
+            width: 14px; height: 14px;
+            background-color: var(--success-green);
+            border: 2px solid var(--bg-dark);
+            border-radius: 50%;
+        }
+
+        .profile-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .profile-role { font-size: 0.9rem; color: var(--neon-purple); font-weight: 500; margin-bottom: 20px; }
+
+        .action-buttons { display: flex; gap: 12px; justify-content: center; margin-bottom: 30px; }
+
+        .p-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex; align-items: center; gap: 8px;
+            border: none;
+        }
+
+        .p-btn img { width: 16px; height: 16px; object-fit: contain; }
+
+        .p-btn-primary {
+            background-color: var(--btn-red);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 75, 75, 0.3);
+        }
+        .p-btn-primary:hover { background-color: var(--btn-red-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 75, 75, 0.4); }
+
+        .p-btn-secondary {
+            background-color: transparent;
+            color: var(--text-gray);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .p-btn-secondary:hover { border-color: var(--accent-purple); color: var(--text-white); background-color: rgba(157, 78, 221, 0.1); }
+
+        .stats-grid { display: flex; flex-direction: column; gap: 16px; }
+
+        .p-stat-card {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        .p-stat-card:hover {
+            background-color: var(--bg-card-hover);
+            transform: scale(1.02);
+            border-color: rgba(157, 78, 221, 0.3);
+        }
+
+        .p-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .p-icon-box { width: 40px; height: 40px; background: rgba(123, 44, 191, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .p-icon-box img { width: 24px; height: 24px; object-fit: contain; }
+
+        .p-live-indicator { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-gray); display: flex; align-items: center; gap: 4px; }
+        .p-live-dot { width: 6px; height: 6px; background-color: var(--success-green); border-radius: 50%; box-shadow: 0 0 5px var(--success-green); animation: pulse 2s infinite; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        .p-stat-number { font-size: 2rem; font-weight: 700; color: var(--text-white); line-height: 1; margin-bottom: 4px; }
+        .p-stat-label { font-size: 0.8rem; font-weight: 600; color: var(--accent-purple); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: block; }
+        .p-stat-desc { font-size: 0.8rem; color: var(--text-gray); line-height: 1.4; margin-bottom: 16px; }
+
+        .p-progress-container { width: 100%; height: 4px; background-color: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; }
+        .p-progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary-purple), var(--neon-purple)); border-radius: 2px; }
+        .bar-1 { width: 85%; }
+        .bar-2 { width: 40%; }
+        .bar-3 { width: 60%; }
+        .bar-4 { width: 100%; }
+
+        /* =========================================
+           STYLE BAGIAN 2: GALLERY (Irhamztoy)
+           ========================================= */
+        .gallery-section {
+            background-color: var(--bg-secondary);
+            padding: 4rem 1rem;
+            position: relative;
+            z-index: 2;
+            border-top: 1px solid #333;
+        }
+
+        .gallery-container { max-width: 1200px; margin: 0 auto; }
+
+        .section-title {
+            text-align: center;
+            margin: 2rem 0 1.5rem;
+            font-size: 1.5rem; 
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .section-title::after {
+            content: ''; display: block; width: 50px; height: 3px;
+            background: var(--accent-color); margin: 8px auto 0; border-radius: 2px;
+        }
+
+        /* Typing Effect Header for Gallery */
+        .gallery-header { text-align: center; margin-bottom: 2rem; }
+        .gallery-header h2 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            line-height: 1.3;
+            min-height: 3.5rem;
+        }
+        .gallery-header .creator {
+            font-size: 1rem; color: var(--text-secondary); font-weight: 300;
+        }
+        .typing-text {
+            border-right: 3px solid var(--accent-color);
+            white-space: nowrap; overflow: hidden; display: inline-block;
+            animation: blink 0.7s step-end infinite;
+        }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--accent-color) } }
+        .bounce-anim { animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+
+        /* Grid Layout */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform var(--transition-speed);
+            cursor: pointer;
+            border: 1px solid #333;
+        }
+        .gallery-card:active { transform: scale(0.98); }
+
+        .card-img-wrapper { width: 100%; height: 180px; overflow: hidden; background: #000; }
+        .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .gallery-card:hover img { transform: scale(1.05); }
+        
+        .card-content { padding: 1.2rem; }
+        .card-title { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .card-desc { font-size: 0.85rem; color: var(--text-secondary); }
+
+        /* Quotes & Music Section */
+        #quotes-section {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border: 1px solid #333;
+            display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .quote-slider { display: flex; align-items: center; width: 100%; justify-content: center; gap: 15px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .quote-display { width: 100%; min-height: 80px; display: flex; align-items: center; justify-content: center; order: 1; }
+        .quote-nav-group { order: 2; display: flex; gap: 15px; }
+        #quote-text { font-size: 1.1rem; font-style: italic; color: #e0e0e0; min-height: 3rem; transition: opacity 0.3s ease; padding: 0 10px; }
+        
+        .nav-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid #444; color: var(--accent-color);
+            width: 45px; height: 45px; border-radius: 50%; cursor: pointer;
+            transition: all 0.3s; display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+        }
+        .nav-btn:hover { background: var(--accent-color); color: #121212; }
+
+        /* Music Player */
+        .music-player-bar {
+            margin-top: 1rem; background: rgba(0,0,0,0.3); padding: 0.8rem 1.2rem;
+            border-radius: 50px; display: flex; align-items: center; gap: 10px;
+            border: 1px solid #333; width: 100%; justify-content: flex-start;
+        }
+        .play-btn {
+            background: var(--accent-color); border: none; color: white;
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;
+        }
+        .track-info { text-align: left; flex-grow: 1; overflow: hidden; white-space: nowrap; }
+        .track-name { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); text-overflow: ellipsis; overflow: hidden; }
+        .track-status { font-size: 0.7rem; color: var(--text-secondary); }
+        .music-visual {
+            width: 25px; height: 25px; border: 2px solid var(--accent-color); border-radius: 50%;
+            border-top-color: transparent; animation: spin 2s linear infinite; opacity: 0; transition: opacity 0.3s;
+        }
+        .music-visual.playing { opacity: 1; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* CTA Button */
+        .cta-container { text-align: center; margin-bottom: 3rem; padding: 1rem 0; }
+        .gradient-btn {
+            position: relative; padding: 15px 40px; font-size: 16px; font-weight: bold;
+            color: white; border: none; border-radius: 50px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(45deg, #004e92, #000428, #cb2d3e, #ef473a);
+            background-size: 300% 300%; animation: gradientAnim 4s ease infinite;
+            width: 100%; max-width: 300px; display: block; margin: 0 auto;
+        }
+        .gradient-btn:active { transform: scale(0.98); }
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        }
+
+        /* Footer */
+        footer { text-align: center; padding: 2rem 1rem; color: var(--text-secondary); font-size: 0.8rem; margin-top: 2rem; border-top: 1px solid #333; }
+
+        /* =========================================
+           MODALS (Common)
+           ========================================= */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto;
+            background-color: var(--modal-overlay); backdrop-filter: blur(5px);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal.show { opacity: 1; }
+
+        /* Modal 1 Style */
+        .modal-content {
+            background-color: var(--card-bg); width: 100%; height: 100%; margin: 0; border-radius: 0;
+            position: relative; display: flex; flex-direction: column; border: none; max-width: none;
+        }
+        .modal-header { padding: 1rem; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 10; }
+        .modal-title { font-size: 1.1rem; color: var(--accent-color); margin: 0; }
+        .close-btn { color: #fff; font-size: 24px; background: none; border: none; padding: 5px; cursor: pointer; }
+        .modal-body { padding: 0; display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
+        .modal-image-container { width: 100%; max-height: 300px; overflow: hidden; background: #000; }
+        .modal-image-container img { width: 100%; height: 100%; object-fit: contain; }
+        .modal-details { padding: 1.5rem; background: var(--card-bg); }
+        .modal-desc { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .video-label { font-size: 0.9rem; color: var(--text-primary); margin-bottom: 10px; display: block; font-weight: 600; }
+        .youtube-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 8px; overflow: hidden; }
+        .youtube-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* Modal 2 Style */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); display: flex; justify-content: center; align-items: center; z-index: 2000;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-container {
+            background-color: var(--card-bg); width: 100%; height: 100%; margin: 0; border-radius: 0;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .modal-header-2 { padding: 15px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); position: sticky; top: 0; z-index: 10; }
+        .modal-header-2 h2 { color: var(--text-primary); font-size: 1.2rem; }
+        .close-btn-2 { background: none; border: none; font-size: 24px; color: var(--text-secondary); padding: 5px; cursor: pointer; }
+        .modal-body-2 { padding: 15px; overflow-y: auto; flex: 1; }
+        .modal-description-2 { color: var(--text-secondary); margin-bottom: 15px; font-size: 0.9rem; }
+        .video-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .video-card { background: #252525; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
+        .video-wrapper { width: 100%; background-color: #000; display: block; line-height: 0; }
+        .video-wrapper video { width: 100%; height: auto; display: block; }
+        .video-caption { padding: 10px; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); text-align: center; background: var(--card-bg); border-top: 1px solid #333; }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .profile-section { padding: 20px; min-height: auto; padding-bottom: 60px; }
+            .modal-content { width: 100%; height: 100%; border-radius: 0; }
+            .modal-container { width: 100%; height: 100%; max-height: 100vh; }
+            .modal-image-container { max-height: 250px; }
+            .video-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (min-width: 769px) {
+            .quote-slider { flex-wrap: nowrap; justify-content: space-between; }
+            .quote-display { width: auto; order: unset; }
+            .quote-nav-group { order: unset; }
+            .modal-content { width: 90%; max-width: 850px; margin: 4% auto; border-radius: 12px; border: 1px solid #333; height: auto; max-height: 90vh; }
+            .modal-container { width: 90%; max-width: 1100px; height: auto; max-height: 90vh; margin: auto; border-radius: 12px; border: 1px solid #333; }
+            .modal-image-container { max-height: 400px; }
+            .video-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .music-player-bar { max-width: 500px; margin: 2rem auto 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BAGIAN 1: PROFILE (Fazri Lukman) -->
+    <section class="profile-section" id="profile">
+        <main class="profile-wrapper">
+            <!-- Header Profil -->
+            <header class="profile-header">
+                <div class="avatar-container">
+                    <!-- Menggunakan seed random agar gambar selalu muncul -->
+                    <img src="pic/logo.png" alt="Fazri Lukman" class="avatar">
+                    <div class="status-badge" title="Online"></div>
+                </div>
+                <h1 class="profile-name">Irhamztoy</h1>
+                <p class="profile-role">Just Be Your Self</p>
+
+                <div class="action-buttons">
+                    <a href="https://anotherxii10.vercel.app/" class="p-btn p-btn-primary">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E" width="50" height="50" alt="Ikon Rumah Solid">
+                      Web Kelas
+                    </a>
+                    
+                    <!-- Tombol ini scroll ke bagian Galeri -->
+                    <a href="#gallery" class="p-btn p-btn-secondary">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a0a0b0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'%3E%3C/path%3E%3C/svg%3E" alt="View Projects">
+                        View Projects
+                    </a>
+                </div>
+            </header>
+
+            <!-- Kartu Statistik -->
+            <div class="stats-grid">
+                <!-- Modul 1: Total Projects -->
+                <article class="p-stat-card">
+                    <div class="p-card-header">
+                        <div class="p-icon-box">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg clip-path='url(%23c)'%3E%3Crect width='100' height='100' fill='white'/%3E%3Ccircle cx='50' cy='50' r='30' fill='%23BC002D'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='49.5' fill='none' stroke='%23EEE'/%3E%3C/svg%3E" width="100">
+                        </div>
+                        <div class="p-live-indicator">
+                            <span class="p-live-dot"></span> live
+                        </div>
+                    </div>
+                    <span class="p-stat-label">日本</span>
+                    <div class="p-stat-number">+81</div>
+                    <p class="p-stat-desc">Salah satu negara impian gw dari kecil, gw tertarik karena disana sangat menjunjung tinggi kedisiplinan dan akhlak, disana juga dikenal dengan view perumahan yang sangat bagus dan rapi</p>
+                    <div class="p-progress-container">
+                        <div class="p-progress-bar bar-4"></div>
+                    </div>
+                </article>
+
+                <!-- Modul 2: Certificates -->
+                <article class="p-stat-card">
+                    <div class="p-card-header">
+                        <div class="p-icon-box">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg clip-path='url(%23c)'%3E%3Crect width='100' height='33.3' fill='black'/%3E%3Crect y='33.3' width='100' height='33.3' fill='%23DD0000'/%3E%3Crect y='66.6' width='100' height='33.4' fill='%23FFCE00'/%3E%3C/g%3E%3C/svg%3E" width="100">
+                        </div>
+                        <div class="p-live-indicator">
+                            <span class="p-live-dot"></span> live
+                        </div>
+                    </div>
+                    <span class="p-stat-label">Deutsch</span>
+                    <div class="p-stat-number">+49</div>
+                    <p class="p-stat-desc">Salah satu negara impian yang bikin gw tertarik dengan nuansa kastil keren gitu, dan pendidikan yang bagus disana, lebih tepatnya gw tertarik sama Ausbuildung, dengan pemandangan yang sangat keren</p>
+                    <div class="p-progress-container">
+                        <div class="p-progress-bar bar-4"></div>
+                    </div>
+                </article>
+
+            </div>
+        </main>
+    </section>
+
+    <!-- BAGIAN 2: GALLERY (Irhamztoy) -->
+    <section class="gallery-section" id="gallery">
+        <div class="gallery-container">
+            <!-- Header Galery -->
+            <header class="gallery-header">
+                <h2><span id="typewriter-title" class="typing-text"></span></h2>
+                <div class="creator bounce-anim">
+                    <i class="fas fa-code"></i> Dibuat oleh <span id="creator-name" style="color:white; font-weight:600;">Irhamztoy</span>
+                </div>
+            </header>
+
+            <main>
+                <!-- Gallery Section -->
+                <h3 class="section-title">Koleksi Visual</h3>
+                <div class="gallery-grid" id="gallery-container">
+                    <!-- Gallery items akan di-inject via JS -->
+                </div>
+
+                <!-- Quotes & Music Section -->
+                <section id="quotes-section">
+                    <div class="quote-slider">
+                        <div class="quote-display">
+                            <p id="quote-text">Loading quotes...</p>
+                        </div>
+                        <div class="quote-nav-group">
+                            <button class="nav-btn" id="prev-btn" aria-label="Quotes Sebelumnya">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="nav-btn" id="next-btn" aria-label="Quotes Selanjutnya">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pemutar Musik -->
+                    <div class="music-player-bar">
+                        <button class="play-btn" id="play-pause-btn">
+                            <i class="fas fa-play" id="play-icon"></i>
+                        </button>
+                        <div class="music-visual" id="visualizer"></div>
+                        <div class="track-info">
+                            <span class="track-name" id="track-name">Latar Belakang Musik</span>
+                            <span class="track-status" id="track-status">Klik Play untuk Memutar</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA Button for Video Grid -->
+                <section class="cta-container">
+                    <button id="openPopupBtn" class="gradient-btn">
+                        <i class="fas fa-film"></i> Lihat Video Asli
+                    </button>
+                </section>
+            </main>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Irhamztoy All right reserved</p>
+    </footer>
+
+    <!-- MODAL 1: IMAGE/YOUTUBE DETAIL -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Judul Gambar</h3>
+                <button class="close-btn" id="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img id="modal-img" src="" alt="Detail Image">
+                </div>
+                <div class="modal-details">
+                    <p class="modal-desc" id="modal-desc">Deskripsi gambar akan muncul di sini.</p>
+                    <span class="video-label"><i class="fas fa-play-circle"></i> Video Terkait (YouTube):</span>
+                    <div class="youtube-wrapper">
+                        <iframe id="modal-video" src="" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: VIDEO GRID POPUP -->
+    <div id="videoModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header-2">
+                <h2 id="modalTitle">Koleksi Video Asli</h2>
+                <button id="closePopupBtn" class="close-btn-2"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="modal-body-2">
+                <p id="modalDesc" class="modal-description-2">
+                    Video lokal dengan rasio asli. Scroll ke bawah untuk melihat lebih banyak.
+                </p>
+
+                <div class="video-grid">
+                    <!-- Video 1 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <video controls poster="https://via.placeholder.com/400x600/1e1e1e/bb86fc?text=Video+1">
+                                <source src="pic/1.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="video-caption">Angelina Christy</div>
+                    </div>
+
+                    <!-- Video 2 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <video controls style="object-fit: cover; aspect-ratio: 9/16;" poster="https://via.placeholder.com/400x600/1e1e1e/bb86fc?text=Video+2">
+                                <source src="pic/2.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="video-caption">Pengen banget wehh juara pidato international🇯🇵</div>
+                    </div>
+
+                    <!-- Video 3 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <video controls style="object-fit: cover; aspect-ratio: 9/16;" poster="https://via.placeholder.com/400x600/1e1e1e/bb86fc?text=Video+3">
+                                <source src="pic/3.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="video-caption">Sorry ya pamer waro dikit hehe🗿</div>
+                    </div>
+
+                    <!-- Video 4 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <video controls style="object-fit: cover; aspect-ratio: 9/16;" poster="https://via.placeholder.com/400x600/1e1e1e/bb86fc?text=Video+4">
+                                <source src="pic/4.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="video-caption">Pengen banget ke jepang🇯🇵</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="bg-music" loop></audio>
+
+    <script>
+        // --- 1. DATA CONFIG ---
+        const galleryData = [
+            { id: 1, title: "Komorebi Kiddo", desc: "Salah satu channel pemuda indonesia yang tinggal di jepang.", img: "pic/1.png", video: "https://www.youtube.com/embed/7kO5q0QE15c?si=m0feB4JhlfaMmHFi" },
+            { id: 2, title: "Pieter patonedi", desc: "Salah satu chanel orang Indonesia yang tinggal di Jerman.", img: "pic/2.png", video: "https://www.youtube.com/embed/GgFYhFUGTBw?si=RG1LSA6HTGHVjR7X" },
+            { id: 3, title: "Chakurin Fuufu", desc: "Salah satu chanel orang indonesia yang tinggal di Jepang", img: "pic/3.png", video: "https://www.youtube.com/embed/b3vW2JMNNWM?si=1kLQvTZJAefR3Dum" },
+            { id: 4, title: "Angelina Christy", desc: "Salah satu obat penyemangat gw.", img: "pic/4.png", video: "https://www.youtube.com/embed/19CGIbIBFcQ?si=B4ZFGpxA6EduBGkm" }
+        ];
+
+        const quotesData = [
+            { text: "Tetap berdoa walaupun yang kamu minta itu mustahil, ingat Doa yang kamu langitkan tidak akan pulang dengan tangan kosong.", audio: "lagu/1.mp3", title: "Yakinlah" },
+            { text: "Jangan pernah bunuh mimpilu, karena sekeras apapun lu pukul dan lu kubur, dia cuman akan pingsan, dan bangkit di usia lu tua dalam bentuk penyesalan.", audio: "lagu/3.mp3", title: "Berusahalah" },
+            { text: "Ketika kamu punya kesempatan untuk kerja ke luar negeri, pergilah! Masa muda tidak datang dua kali.", audio: "lagu/2.mp3", title: "Bangkitlah" }
+        ];
+
+        // --- 2. RENDER GALLERY ---
+        const galleryContainer = document.getElementById('gallery-container');
+        galleryData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'gallery-card';
+            card.onclick = () => openModal1(item);
+            card.innerHTML = `
+                <div class="card-img-wrapper">
+                    <img src="${item.img}" alt="${item.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/1e1e1e/bb86fc?text=${item.title}'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">${item.title}</h3>
+                    <p class="card-desc">${item.desc}</p>
+                </div>
+            `;
+            galleryContainer.appendChild(card);
+        });
+
+        // --- 3. MODAL 1 LOGIC (Image/YouTube) ---
+        const modal1 = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalVideo = document.getElementById('modal-video');
+        const closeModalBtn1 = document.getElementById('close-modal');
+        let wasPlayingBeforeModal1 = false;
+
+        function openModal1(item) {
+            modalTitle.innerText = item.title;
+            modalDesc.innerText = item.desc;
+            modalImg.src = item.img;
+            const videoSrc = item.video.includes('?') ? item.video + '&autoplay=1' : item.video + '?autoplay=1';
+            modalVideo.src = videoSrc; 
+
+            modal1.style.display = "block";
+            setTimeout(() => modal1.classList.add('show'), 10);
+            document.body.style.overflow = 'hidden';
+            
+            if (!bgMusic.paused) { bgMusic.pause(); wasPlayingBeforeModal1 = true; } 
+            else { wasPlayingBeforeModal1 = false; }
+        }
+
+        function closeModal1() {
+            modal1.classList.remove('show');
+            setTimeout(() => {
+                modalVideo.src = ""; 
+                modal1.style.display = "none";
+                document.body.style.overflow = 'auto';
+                if (wasPlayingBeforeModal1) {
+                    bgMusic.play().then(() => { isPlaying = true; updateMusicUI(); }).catch(e => console.log(e));
+                    wasPlayingBeforeModal1 = false;
+                }
+            }, 300);
+        }
+        closeModalBtn1.onclick = closeModal1;
+        window.onclick = function(event) { if (event.target == modal1) closeModal1(); };
+
+        // --- 4. TYPEWRITER HEADER (Gallery) ---
+        const titleElement = document.getElementById('typewriter-title');
+        const mainTitle = "Menginspirasi";
+        let titleIndex = 0;
+        function typeWriter() {
+            if (titleIndex < mainTitle.length) {
+                titleElement.innerHTML += mainTitle.charAt(titleIndex);
+                titleIndex++;
+                setTimeout(typeWriter, 80); 
+            } else { titleElement.style.borderRight = "none"; }
+        }
+
+        // --- 5. QUOTES & MUSIC LOGIC ---
+        let currentQuoteIndex = 0; let isPlaying = false;
+        const bgMusic = document.getElementById('bg-music');
+        const quoteText = document.getElementById('quote-text');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playIcon = document.getElementById('play-icon');
+        const visualizer = document.getElementById('visualizer');
+        const trackName = document.getElementById('track-name');
+        const trackStatus = document.getElementById('track-status');
+
+        let typeInterval;
+        function typeQuote(text) {
+            quoteText.style.opacity = 0; 
+            setTimeout(() => {
+                quoteText.innerHTML = ""; let i = 0; clearInterval(typeInterval); 
+                quoteText.style.borderRight = "3px solid var(--accent-color)";
+                quoteText.style.opacity = 1; 
+                typeInterval = setInterval(() => {
+                    if (i < text.length) { quoteText.innerHTML += text.charAt(i); i++; } 
+                    else { clearInterval(typeInterval); quoteText.style.borderRight = "none"; }
+                }, 25);
+            }, 300);
+        }
+
+        function loadQuote(index) {
+            if (index >= quotesData.length) currentQuoteIndex = 0;
+            else if (index < 0) currentQuoteIndex = quotesData.length - 1;
+            else currentQuoteIndex = index;
+            const data = quotesData[currentQuoteIndex];
+            typeQuote(data.text);
+            const wasPlaying = !bgMusic.paused; 
+            bgMusic.src = data.audio; 
+            trackName.innerText = data.title;
+            // Jika file audio tidak ada (karena path 'lagu/' mungkin kosong), handle error di onerror
+            if (wasPlaying) { 
+                bgMusic.play().catch(e => {
+                    console.log("Autoplay blocked or file not found", e);
+                    trackStatus.innerText = "Audio file missing/blocked";
+                }); 
+            }
+        }
+
+        nextBtn.addEventListener('click', () => loadQuote(currentQuoteIndex + 1));
+        prevBtn.addEventListener('click', () => loadQuote(currentQuoteIndex - 1));
+
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play().then(() => { isPlaying = true; updateMusicUI(); }).catch(err => {
+                    console.log("Need interaction or file missing");
+                    trackStatus.innerText = "File Audio Tidak Ditemukan";
+                });
+            } else { bgMusic.pause(); isPlaying = false; updateMusicUI(); }
+        }
+
+        function updateMusicUI() {
+            if (!bgMusic.paused) { playIcon.className = "fas fa-pause"; visualizer.classList.add('playing'); trackStatus.innerText = "Playing..."; } 
+            else { playIcon.className = "fas fa-play"; visualizer.classList.remove('playing'); trackStatus.innerText = "Paused"; }
+        }
+        playPauseBtn.addEventListener('click', toggleMusic);
+        bgMusic.onended = () => { isPlaying = false; updateMusicUI(); };
+        bgMusic.onerror = () => { trackStatus.innerText = "Audio Error/Not Found"; visualizer.classList.remove('playing'); };
+
+        // --- 6. MODAL 2 LOGIC (Video Grid) ---
+        const openBtn2 = document.getElementById('openPopupBtn');
+        const closeBtn2 = document.getElementById('closePopupBtn');
+        const modal2 = document.getElementById('videoModal');
+        openBtn2.addEventListener('click', () => { modal2.classList.add('active'); document.body.style.overflow = 'hidden'; });
+        function closeModal2() {
+            modal2.classList.remove('active'); document.body.style.overflow = 'auto';
+            document.querySelectorAll('video').forEach(v => v.pause());
+        }
+        closeBtn2.addEventListener('click', closeModal2);
+        modal2.addEventListener('click', (e) => { if (e.target === modal2) closeModal2(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal2.classList.contains('active')) closeModal2(); });
+
+        // --- 7. INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            typeWriter();
+            loadQuote(0);
+        });
+
+    </script>
+</body>
+</html>
